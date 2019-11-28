@@ -7,6 +7,7 @@ const {User} = require('../modules/user-module');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const {authLogin} = require('../middleware/authentication-login');
+const {authAd} = require('../middleware/validateAd');
 
 router.post("/", async (req, res) => {
     const {error} = validateLogin(req.body);
@@ -20,6 +21,11 @@ router.post("/", async (req, res) => {
 
     const token = getToken(user);
     res.header("x-auth-token", token).send("login successfully"); 
+});
+
+router.get("/all", [authAd, authLogin] ,async (req, res) => {
+    const user = await User.find().select("-password");
+    res.send(user);
 });
 
 router.get("/me", authLogin, async (req, res) => {
