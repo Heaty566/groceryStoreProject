@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async(req, res) => {
     const {error} = validateId(req.params.id);
-    if (error) return res.status(404).send("The product with the given Id was not found");
+    if (error) return res.status(404).send(error.details[0].message);
 
     const product = await Product.findById(req.params.id);
     res.send(product);
@@ -31,7 +31,6 @@ router.post('/', async (req, res) => {
     if (error2) return res.status(404).send(error2.details[0].message);
 
     let type = await Type.findOne({_id: req.body.typeId});
-    console.log(type);
     product.type = type;
     product = await product.save();
     res.send(product);

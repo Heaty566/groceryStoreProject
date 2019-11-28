@@ -5,10 +5,12 @@ const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const types = require('./routes/type-route');
 const products = require('./routes/product-route');
+const user = require('./routes/user-route');
 
 app.use(express.json());
 app.use('/types', types);
 app.use('/products', products);
+app.use('/users', user);
 
 
 mongoose.connect('mongodb://localhost/grocery', { useNewUrlParser: true, useUnifiedTopology: true })

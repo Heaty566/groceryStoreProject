@@ -26,5 +26,7 @@ validateProduct = (product) => {
     return Joi.validate(product, shema);
 };
 
+
+module.exports.productSchema = productSchema;
 module.exports.validate = validateProduct;
 module.exports.Product = Product;
