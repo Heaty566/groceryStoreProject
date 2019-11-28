@@ -8,7 +8,7 @@ const types = require('./routes/type-route');
 app.use(express.json());
 app.use('/types', types);
 
-mongoose.connect('mongodb://localhost', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost/grocery', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("connect to server successfuly"))
     .catch((err) => console.log("connect to server failed"));
 
