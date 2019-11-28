@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
-
 const {productSchema} = require('./product-module');
 
-const userSchema = mongoose.Schema({
+
+
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         maxlength: 100,
@@ -38,6 +39,8 @@ const userSchema = mongoose.Schema({
 });
 
 const User = mongoose.model('User', userSchema);
+
+
 
 validateUser = (user) => {
     const schema = {
