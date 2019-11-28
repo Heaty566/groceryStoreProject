@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const Joi = require('joi');
 
 const typeSchema = new mongoose.Schema({
@@ -7,8 +6,7 @@ const typeSchema = new mongoose.Schema({
         type: String,
         maxlength: 100,
         minlength: 1,
-        required: true,
-        unique: true
+        required: true
     }
 });
 
@@ -22,12 +20,6 @@ validateType = (type) => {
     return Joi.validate(type, shema);
 };
 
-embeddingType = (type) => {
-    return {
-        name: type.name
-    };
-};
-
+module.exports.typeSchema = typeSchema;
 module.exports.validate = validateType;
-module.exports.embed = embeddingType;
 module.exports.Type = Type;

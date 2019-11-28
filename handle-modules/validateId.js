@@ -1,11 +1,15 @@
 const Joi = require('joi');
 
 validateId = (id) => {
-    const shema = {
-        id: Joi.objectId().required()
+    const idShema = {
+        _id: id
     };
 
-    return Joi.validate(id, shema);
+    const shema = {
+        _id: Joi.objectId().required()
+    };
+
+    return Joi.validate(idShema, shema);
 };
 
 module.exports.validateId = validateId;

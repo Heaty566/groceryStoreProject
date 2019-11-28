@@ -4,7 +4,7 @@ const _ = require('lodash');
 const router = express.Router();
 
 const {validateId} = require('../handle-modules/validateid');
-const {Type, validate, embed} = require('../modules/type-module');
+const {Type, validate} = require('../modules/type-module');
 
 router.get("/", async (req, res) => {
     const type = await Type.find();
@@ -22,9 +22,31 @@ router.get("/:id", async(req, res) => {
 
 router.post('/', async (req, res) => {
     const {error} =  validate(req.body);
-    if (error) return res.status(400).send(error.deatils[0].message);
+    if (error) return res.status(400).send(error.details[0].message);
     
-    const type = new Type(_.pick(req.body, ["name"]));
+    let type = new Type(_.pick(req.body, ["name"]));
+    type = await type.save();
+    res.send(type);
+});
+
+router.put('/:id', async (req, res) => {
+    const {error} = validateId(req.params.id);
+    if (error) return res.status(404).send(error.details[0].message);
+
+    const {error: error1} = validate(req.body);
+    if (error1) return res.status(400).send(error1.details[0].message);
+    
+    let type = await Type.findById(req.params.id);
+    type.name = req.body.name;
+    type = await type.save();
+    res.send(type);
+});
+
+router.delete('/:id', async(req, res) => {
+    const {error} = validateId(req.params.id);
+    if (error) return res.status(404).send(error.details[0].message);
+
+    let type = await Type.findByIdAndDelete(req.params.id);
     res.send(type);
 });
 
