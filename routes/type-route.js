@@ -7,6 +7,7 @@ const {validateId} = require('../handle-modules/validateid');
 const {Type, validate} = require('../modules/type-module');
 
 router.get("/", async (req, res) => {
+    throw new Error("tkkk");
     const type = await Type.find();
     res.send(type);
 });
